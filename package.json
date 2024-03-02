@@ -3,25 +3,31 @@
   "version": "0.0.1",
   "author": "Carl Chen",
   "license": "MIT",
-  "main": "",
-  "module": "",
   "description": "a localStorage cache implementation",
-  "typings": "",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://"
+    "url": "git+https://github.com/cc-hearts/storage-cache.git"
   },
-  "files": [],
   "keywords": [
     "localStorage",
     "sessionStorage",
     "cache"
   ],
-  "bugs": {
-    "url": "https://github.com/"
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+      }
+    ],
+    "./package.json": "./package.json",
+    "./*": "./*"
   },
-  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/cc-hearts/storage-cache/issues"
+  },
+  "homepage": "https://github.com/cc-hearts/storage-cache",
   "scripts": {
     "build": "rollup -c"
   },
