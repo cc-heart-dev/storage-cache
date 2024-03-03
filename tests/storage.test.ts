@@ -1,0 +1,96 @@
+import { Context, Storage, TimeType } from "../src/helper";
+import { storageCacheFactory } from "../src/storage";
+import { describe, beforeEach, it, expect, vi, beforeAll } from "vitest";
+
+describe("storageCacheFactory", () => {
+  let ctx: Context;
+  let storage: Storage;
+
+  beforeAll(() => {
+    vi.useFakeTimers()
+  })
+  beforeEach(() => {
+    ctx = { namespace: "test-" };
+    storage = Storage.LOCAL;
+  });
+
+  it("should create a cache object with setItem, clear, getItem, and removeItem methods", () => {
+    const cache = storageCacheFactory(ctx, storage);
+
+    expect(cache.setItem).toBeInstanceOf(Function);
+    expect(cache.clear).toBeInstanceOf(Function);
+    expect(cache.getItem).toBeInstanceOf(Function);
+    expect(cache.removeItem).toBeInstanceOf(Function);
+  });
+
+  it("should set an item in the cache", () => {
+    const cache = storageCacheFactory(ctx, storage);
+    const key = "test-key";
+    const value = "test-value";
+
+    cache.setItem(key, value);
+
+    expect(cache.getItem(key)).toBe(value);
+  });
+
+  it("should remove an item from the cache", () => {
+    const cache = storageCacheFactory(ctx, storage);
+    const key = "test-key";
+    const value = "test-value";
+
+    cache.setItem(key, value);
+    cache.removeItem(key);
+
+    expect(cache.getItem(key)).toBeNull();
+  });
+
+  it("should clear all items from the cache", () => {
+    const cache = storageCacheFactory(ctx, storage);
+    const key1 = "test-key1";
+    const value1 = "test-value1";
+    const key2 = "test-key2";
+    const value2 = "test-value2";
+
+    cache.setItem(key1, value1);
+    cache.setItem(key2, value2);
+    cache.clear();
+
+    expect(cache.getItem(key1)).toBeNull();
+    expect(cache.getItem(key2)).toBeNull();
+  });
+
+  it("should set an item in the cache with an expiration time and PX", () => {
+    const cache = storageCacheFactory(ctx, storage);
+    const key = "test-key";
+    const value = "test-value";
+    const expirationTime = 1000;
+    const timeType: TimeType = "PX";
+
+    cache.setItem(key, value, timeType, expirationTime);
+
+    setTimeout(() => {
+      expect(cache.getItem(key)).toBeNull();
+    }, 1001)
+
+    expect(cache.getItem(key)).toBe(value);
+    vi.runAllTimers()
+  });
+
+  it("should set an item in the cache with an expiration time and EX", () => {
+    const cache = storageCacheFactory(ctx, storage);
+    const key = "test-key";
+    const value = "test-value";
+    const expirationTime = 1;
+    const timeType: TimeType = "EX";
+
+    cache.setItem(key, value, timeType, expirationTime);
+
+    setTimeout(() => {
+      expect(cache.getItem(key)).toBeNull();
+    }, 1001)
+
+    expect(cache.getItem(key)).toBe(value);
+    vi.runAllTimers()
+  });
+
+});
