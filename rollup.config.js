@@ -13,11 +13,7 @@ export default {
     {
       file: 'dist/esm/index.js',
       format: 'esm',
-    },
-    {
-      format: 'es',
-      file: 'dist/browser/index.js',
-    },
+    }
   ],
   plugins: [resolve(), commonjs(), typescript(tsConfig)],
 }
