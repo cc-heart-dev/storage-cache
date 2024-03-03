@@ -1,6 +1,6 @@
 import { useContext } from "./ctx";
 import { enhancementNamespace } from "./enhancement";
-import { storageCacheFactory } from "./local-storage";
+import { storageCacheFactory } from "./storage";
 import { Storage } from './helper'
 
 export function defineStorage(namespace: string) {

@@ -8,6 +8,7 @@ export function storageCacheFactory(ctx: Context, storageType: Storage) {
   function setItem(key: string, value: string): void
   function setItem(key: string, value: string, expired: number): void
   function setItem(key: string, value: string, timeType: TimeType, expired: number): void
+
   function setItem() {
     const args = arguments
     let timeType: TimeType | undefined, expired: number | undefined
@@ -18,8 +19,7 @@ export function storageCacheFactory(ctx: Context, storageType: Storage) {
       timeType = args[2]
       expired = args[3]
     }
-    const params = ([args[1], timeType, expired]).filter(Boolean)
-    // @ts-ignore
+    const params = ([args[1], timeType, expired]).filter(Boolean) as [string, TimeType, number]
     storage.setItem(namespaceKey, formatValue.apply(null, params))
   }
 
@@ -30,6 +30,7 @@ export function storageCacheFactory(ctx: Context, storageType: Storage) {
       return null
     }
     const target = JSON.parse(value)
+
     if (target.expiredTime && target.expiredTime < Date.now()) {
       storage.removeItem(namespaceKey)
       return null
@@ -42,11 +43,11 @@ export function storageCacheFactory(ctx: Context, storageType: Storage) {
     storage.removeItem(namespaceKey)
   }
 
-  function clearItem() {
+  function clear() {
     Object.keys(storage).filter(key => {
       return key.startsWith(ctx.namespace)
     }).forEach(key => storage.removeItem(key))
   }
 
-  return { setItem, clearItem, getItem, removeItem }
+  return { setItem, clear, getItem, removeItem }
 }
