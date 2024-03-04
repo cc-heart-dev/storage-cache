@@ -1,6 +1,6 @@
 {
   "name": "@cc-heart/storage-cache",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Carl Chen",
   "license": "MIT",
   "description": "a localStorage cache implementation",
