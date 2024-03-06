@@ -13,6 +13,11 @@ export default {
     {
       file: 'dist/esm/index.js',
       format: 'esm',
+    },
+    {
+      file: 'dist/umd/index.js',
+      format: 'umd',
+      name: '__storage_cache__'
     }
   ],
   plugins: [resolve(), commonjs(), typescript(tsConfig)],
