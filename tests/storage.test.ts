@@ -76,6 +76,17 @@ describe("storageCacheFactory", () => {
     vi.runAllTimers()
   });
 
+  it('should set item with expiration', () => {
+    const ctx = { namespace: 'test_' };
+    const storage = storageCacheFactory(ctx, Storage.LOCAL);
+    storage.setItem('key2', 'value2', 1000);
+    const retrievedValue = localStorage.getItem('test_key2');
+    console.log(retrievedValue);
+
+    expect(retrievedValue).toMatch(/"curTime":\d+,"value":"value2","expiredTime":\d+/);
+  });
+
+
   it("should set an item in the cache with an expiration time and EX", () => {
     const cache = storageCacheFactory(ctx, storage);
     const key = "test-key";
