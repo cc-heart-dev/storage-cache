@@ -18,7 +18,7 @@ Creating a StorageCache Instance
 ```js
 import { defineStorage } from '@cc-heart/storage-cache';
 
-const { localStorageCache, sessionStorageCache } = new defineStorage('namespace');
+const { localStorageCache, sessionStorageCache } = defineStorage('namespace');
 ```
 
 set data:
