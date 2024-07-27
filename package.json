@@ -1,6 +1,6 @@
 {
   "name": "@cc-heart/storage-cache",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Carl Chen",
   "license": "MIT",
   "description": "a localStorage cache implementation",
@@ -8,6 +8,9 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/types/index.d.ts",
+  "files": [
+		"dist"
+	],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cc-hearts/storage-cache.git"
