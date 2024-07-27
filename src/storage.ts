@@ -1,15 +1,26 @@
-import { Context } from "./helper";
 import { formatValue } from "./enhancement";
-import { TimeType, Storage } from "./helper";
+import { Context, Storage, TimeType } from "./helper";
 
 export function storageCacheFactory(ctx: Context, storageType: Storage) {
-  const storage = storageType === Storage.LOCAL ? localStorage : sessionStorage;
+
+	function getStorageInstance() {
+		if (typeof window === 'undefined') {
+			console.warn('Warning: Running in a non-browser environment.');
+			return
+
+		}
+		
+		return storageType === Storage.LOCAL ? localStorage : sessionStorage
+	}
 
   function setItem(key: string, value: string): void
   function setItem(key: string, value: string, expired: number): void
   function setItem(key: string, value: string, timeType: TimeType, expired: number): void
 
   function setItem() {
+		const storage = getStorageInstance()
+		if (!storage) return
+
     const args = arguments
     let timeType: TimeType | undefined, expired: number | undefined
     const namespaceKey = ctx.namespace + args[0]
@@ -24,6 +35,9 @@ export function storageCacheFactory(ctx: Context, storageType: Storage) {
   }
 
   function getItem(key: string) {
+		const storage = getStorageInstance()
+		if (!storage) return
+
     const namespaceKey = ctx.namespace + key
     const value = storage.getItem(namespaceKey)
     if (!value) {
@@ -39,11 +53,17 @@ export function storageCacheFactory(ctx: Context, storageType: Storage) {
   }
 
   function removeItem(key: string) {
+		const storage = getStorageInstance()
+		if (!storage) return
+
     const namespaceKey = ctx.namespace + key
     storage.removeItem(namespaceKey)
   }
 
   function clear() {
+		const storage = getStorageInstance()
+		if (!storage) return
+
     Object.keys(storage).filter(key => {
       return key.startsWith(ctx.namespace)
     }).forEach(key => storage.removeItem(key))

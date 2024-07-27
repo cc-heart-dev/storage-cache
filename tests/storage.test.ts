@@ -1,6 +1,6 @@
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { Context, Storage, TimeType } from "../src/helper";
 import { storageCacheFactory } from "../src/storage";
-import { describe, beforeEach, it, expect, vi, beforeAll } from "vitest";
 
 describe("storageCacheFactory", () => {
   let ctx: Context;
@@ -103,5 +103,26 @@ describe("storageCacheFactory", () => {
     expect(cache.getItem(key)).toBe(value);
     vi.runAllTimers()
   });
+
+	it('displaying warn in a non-browser environment', () => {
+		const __window = window
+		const __warn = console.warn
+
+		// @ts-ignore
+		window = undefined
+		console.warn = vi.fn()
+		globalThis.window === undefined
+
+		const cache = storageCacheFactory(ctx, storage)
+		const key = "test-key"
+		const value = "test-value"
+		cache.setItem(key,value)
+
+		expect(console.warn).toHaveBeenCalled()
+		expect(console.warn).toHaveBeenCalledWith("Warning: Running in a non-browser environment.")
+
+		window == __window
+		console.warn = __warn
+	})
 
 });

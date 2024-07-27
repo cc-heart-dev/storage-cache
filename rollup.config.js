@@ -1,7 +1,10 @@
-import typescript from 'rollup-plugin-typescript2'
-import tsConfig from './tsconfig.json' assert { type: 'json' }
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
+import { readFileSync } from 'fs'
+import typescript from 'rollup-plugin-typescript2'
+
+const tsConfigStr = readFileSync('./tsconfig.json')
+const tsConfig = JSON.parse(tsConfigStr)
 
 export default {
   input: './src/index.ts',
