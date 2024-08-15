@@ -4,7 +4,9 @@ export interface Context {
 
 export type TimeType = 'EX' | 'PX'
 
-export enum Storage {
+export type StorageCallback = (storage: Storage) => any
+
+export enum StorageType {
   LOCAL = 'localStorage',
-  SESSION ='sessionStorage'
+  SESSION = 'sessionStorage'
 }

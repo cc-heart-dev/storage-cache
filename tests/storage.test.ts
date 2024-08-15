@@ -1,17 +1,17 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { Context, Storage, TimeType } from "../src/helper";
+import { Context, StorageType, TimeType } from "../src/helper";
 import { storageCacheFactory } from "../src/storage";
 
 describe("storageCacheFactory", () => {
   let ctx: Context;
-  let storage: Storage;
+  let storage: StorageType;
 
   beforeAll(() => {
     vi.useFakeTimers()
   })
   beforeEach(() => {
     ctx = { namespace: "test-" };
-    storage = Storage.LOCAL;
+    storage = StorageType.LOCAL;
   });
 
   it("should create a cache object with setItem, clear, getItem, and removeItem methods", () => {
@@ -78,7 +78,7 @@ describe("storageCacheFactory", () => {
 
   it('should set item with expiration', () => {
     const ctx = { namespace: 'test_' };
-    const storage = storageCacheFactory(ctx, Storage.LOCAL);
+    const storage = storageCacheFactory(ctx, StorageType.LOCAL);
     storage.setItem('key2', 'value2', 1000);
     const retrievedValue = localStorage.getItem('test_key2');
     console.log(retrievedValue);
