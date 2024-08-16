@@ -1,10 +1,14 @@
-# Storage Cache
+# storage-cache
 
-Storage Cache is a library for scoping APIs stored in browser local storage, aimed at preventing conflicts when using APIs in the same origin environment.
+storage-cache is a utility library designed to enhance the native `localStorage` and `sessionStorage` in browsers. With this library, you can manage stored data more flexibly, avoid interference between different data, and easily set expiration times for your data.
+
+
+## Features
+
+- **Storage scope isolation**
+- **Support for setting expiration times**
 
 ## Installation
-
-You can install Storage Cache via npm:
 
 ```shell
 npm install @cc-heart/storage-cache
@@ -13,7 +17,7 @@ npm install @cc-heart/storage-cache
 
 ## Usage
 
-Creating a StorageCache Instance
+Create a storage-cache instance
 
 ```js
 import { defineStorage } from '@cc-heart/storage-cache';
@@ -21,7 +25,7 @@ import { defineStorage } from '@cc-heart/storage-cache';
 const { localStorageCache, sessionStorageCache } = defineStorage('namespace');
 ```
 
-set data:
+Set data
 
 ```js
 localStorageCache.setItem('key', 'value');
@@ -29,19 +33,19 @@ localStorageCache.setItem('key', 'value', 1000) // set expiration time
 localStorageCache.setItem('key', 'value', 'EX', 1000) // set expiration time in second
 ```
 
-get data:
+Get data
 
 ```js
 localStorageCache.getItem('key') // value
 ```
 
-remove data:
+Remove data
 
 ```js
 localStorageCache.removeItem('key')
 ```
 
-clean up all storage under the scope:
+Clear all data within the storage scope
 
 ```js
 localStorageCache.clear()
@@ -49,5 +53,4 @@ localStorageCache.clear()
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
+This project is licensed under the [MIT](./LICENSE) License.
